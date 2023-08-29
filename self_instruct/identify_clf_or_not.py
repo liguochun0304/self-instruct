@@ -83,7 +83,7 @@ if __name__ == '__main__':
         print(f"Loaded {len(existing_requests)} existing requests")
 
     progress_bar = tqdm.tqdm(total=len(lines))
-    with open(output_path, "w") as fout:
+    with open(output_path, "w",encoding="utf-8") as fout:
         for batch_idx in range(0, len(lines), args.request_batch_size):
             batch = [json.loads(line) for line in lines[batch_idx: batch_idx + args.request_batch_size]]
             if all(d["instruction"] in existing_requests for d in batch):

@@ -198,14 +198,14 @@ if __name__ == "__main__":
     
     generated_tasks = []
     for instance_file in args.instance_files:
-        with open(instance_file) as fin:
+        with open(instance_file,encoding="utf-8") as fin:
             for line in fin:
                 generated_tasks.append(json.loads(line))
     print(f"Loaded {len(generated_tasks)} raw generated tasks")
 
     task_clf_types = {}
     for file in args.classification_type_files:
-        with open(file) as fin:
+        with open(file,encoding="utf-8") as fin:
             for line in fin:
                 data = json.loads(line)
                 task_clf_types[data["instruction"]] = data["is_classification"].strip() in ["Yes", "yes", "YES"]

@@ -85,7 +85,7 @@ def parse_args():
     )
     parser.add_argument(
         "--max_tokens",
-        default=500,
+        default=50,
         type=int,
         help="The max_tokens parameter of GPT3.",
     )

@@ -93,7 +93,7 @@ if __name__ == '__main__':
             tasks.append(data)
 
     task_clf_types = {}
-    with open(os.path.join(args.batch_dir, "is_clf_or_not_davinci_template_1.jsonl")) as fin:
+    with open(os.path.join(args.batch_dir, "is_clf_or_not_davinci_template_1.jsonl"),encoding="utf-8") as fin:
         for line in fin:
             data = json.loads(line)
             task_clf_types[data["instruction"]] = data["is_classification"].strip() in ["Yes", "yes", "YES"]
@@ -107,7 +107,7 @@ if __name__ == '__main__':
     output_path = os.path.join(args.batch_dir, args.output_file)
     existing_requests = {}
     if os.path.exists(output_path):
-        with open(output_path) as fin:
+        with open(output_path,encoding="utf-8") as fin:
             for line in tqdm.tqdm(fin):
                 try:
                     data = json.loads(line)
@@ -117,7 +117,7 @@ if __name__ == '__main__':
         print(f"Loaded {len(existing_requests)} existing requests")
 
     progress_bar = tqdm.tqdm(total=len(tasks))
-    with open(output_path, "w") as fout:
+    with open(output_path, "w",encoding="utf-8") as fout:
         for batch_idx in range(0, len(tasks), args.request_batch_size):
             batch = tasks[batch_idx: batch_idx + args.request_batch_size]
             if all(d["instruction"] in existing_requests for d in batch):

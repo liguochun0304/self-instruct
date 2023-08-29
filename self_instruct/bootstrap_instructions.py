@@ -106,7 +106,7 @@ def parse_args():
     parser.add_argument(
         "--num_prompt_instructions",
         type=int,
-        default=8,
+        default=5,
         help="The number of instructions to use in the prompt."
     )
     parser.add_argument(
@@ -130,7 +130,7 @@ def parse_args():
 
 if __name__ == "__main__":
     args = parse_args()
-    seed_tasks = [json.loads(l) for l in open(args.seed_tasks_path, "r")]
+    seed_tasks = [json.loads(l) for l in open(args.seed_tasks_path, "r",encoding="utf-8")]
     if args.use_clf_seed_tasks_only:
         seed_tasks = [t for t in seed_tasks if t["is_classification"]]
     seed_instructions = [t["instruction"] for t in seed_tasks]
@@ -170,6 +170,8 @@ if __name__ == "__main__":
                 random.shuffle(prompt_instructions)
                 prompt = encode_prompt(prompt_instructions, classification=args.use_clf_seed_tasks_only)
                 batch_inputs.append(prompt)
+                batch_inputs.append("返回的结果请输出中文！谢谢")
+
             results = make_gpt3_requests(
                 engine=args.engine,
                 prompts=batch_inputs,
